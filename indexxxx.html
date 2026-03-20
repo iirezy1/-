@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHOP_tA1 & INSANITY | المتجر والمنصة الخيرية</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+        :root { --primary-green: #22c55e; --dark-bg: #050505; --card-bg: #0d0d0d; }
+        body { background-color: var(--dark-bg); color: #fff; font-family: 'Cairo', sans-serif; margin: 0; }
+        .product-card { background: var(--card-bg); border-radius: 1.5rem; transition: 0.4s; border: 1px solid rgba(255,255,255,0.05); }
+        .product-card:hover { border-color: var(--primary-green); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(34, 197, 94, 0.2); }
+        .charity-card { background: linear-gradient(145deg, #0f1a0f, #050505); border: 2px solid #22c55e33; transition: 0.3s; }
+        .charity-card:hover { border-color: #22c55e; background: #0f1a0f; }
+        .cat-btn { background: #111; padding: 10px 20px; border-radius: 12px; transition: 0.3s; font-weight: bold; }
+        .cat-btn.active { background: var(--primary-green); color: #000; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body>
+
+    <nav class="sticky top-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/5 p-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-green-500 rounded flex items-center justify-center rotate-12">
+                    <i class="fas fa-heart text-black"></i>
+                </div>
+                <span class="text-xl font-black text-green-500">SHOP_tA1 x INSANITY</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="openTab('charity')" class="text-xs font-bold bg-green-600/20 text-green-400 px-4 py-2 rounded-full border border-green-500/30">قسم التبرع 🤲</button>
+                <div id="cartBtn" class="bg-white/5 px-4 py-2 rounded-xl border border-white/10 font-bold">
+                    🛒 <span id="cartCount">0</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto p-6">
+        
+        <div class="flex gap-4 mb-10 overflow-x-auto no-scrollbar pb-2">
+            <button onclick="openTab('store')" id="tabStore" class="cat-btn active">🛒 المتجر الإلكتروني</button>
+            <button onclick="openTab('charity')" id="tabCharity" class="cat-btn">❤️ منصة إنسانيتي للتبرع</button>
+        </div>
+
+        <section id="storeSection">
+            <div class="mb-8">
+                <h2 class="text-3xl font-black text-white mb-2">قائمة المنتجات</h2>
+                <p class="text-gray-400">اختر من أفضل العروض والرانكات</p>
+            </div>
+            <div id="productGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                </div>
+        </section>
+
+        <section id="charitySection" class="hidden animate__animated animate__fadeIn">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl font-black text-green-500 mb-4">بصمة أمل | منصة إنسانيتي</h1>
+                <p class="max-w-2xl mx-auto text-gray-400 font-bold">
+                    تصل تبرعاتكم مباشرة للعوائل المتعففة ومنظمات مساعدة الفقراء في العراق. تبرعك اليوم هو حياة جديدة لغيرك.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <script>
+                    const amounts = [1000, 2000, 3000, 5000, 10000, 15000, 20000, 25000, 30000];
+                    amounts.forEach(amt => {
+                        document.write(`
+                            <div class="charity-card p-6 rounded-[2rem] text-center flex flex-col justify-between">
+                                <i class="fas fa-hand-holding-heart text-3xl text-green-500 mb-3"></i>
+                                <h3 class="font-bold text-gray-300">تبرع بمبلغ</h3>
+                                <div class="text-2xl font-black my-4 text-white">${amt.toLocaleString()} <span class="text-xs text-green-500">IQD</span></div>
+                                <button onclick="processDonation(${amt})" class="w-full bg-green-500 text-black py-3 rounded-xl font-black hover:scale-105 transition active:scale-95 shadow-lg shadow-green-500/20">
+                                    تبرع الآن
+                                </button>
+                            </div>
+                        `);
+                    });
+                </script>
+            </div>
+
+            <div class="mt-16 bg-white/5 border border-white/10 p-8 rounded-[2.5rem] flex flex-col md:flex-row items-center gap-8 justify-between">
+                <div>
+                    <h3 class="text-2xl font-black text-green-500 mb-2">لماذا نتبرع؟</h3>
+                    <p class="text-gray-400 leading-relaxed">تساهم هذه الأموال في شراء السلات الغذائية، توفير المستلزمات الطبية، ودعم الأيتام. نحن مجرد وسيط خير يوصل أمانتكم.</p>
+                </div>
+                <a href="https://wa.me/9647718457710?text=قمت+بالتبرع+عبر+منصة+إنسانيتي" class="bg-white text-black px-10 py-4 rounded-2xl font-black flex items-center gap-3 hover:bg-green-400 transition">
+                    <i class="fab fa-whatsapp text-2xl"></i> تواصل لتأكيد التبرع
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // إعدادات المتجر والتبرع
+        const MY_PHONE = "07718457710";
+        let cart = [];
+
+     
+     
+
+        // وظيفة التبرع التلقائي (تغيير الكود حسب المبلغ)
+        function processDonation(amount) {
+            // كود التحويل لآسيا سيل: *123*المبلغ*الرقم*1#
+            const ussdCode = `*123*${amount}*${MY_PHONE}*1#`;
+            
+            // محاولة التحويل مباشرة عبر رابط الاتصال
+            window.location.href = `tel:${encodeURIComponent(ussdCode)}`;
+            
+            // رسالة تنبيه للمستخدم
+            setTimeout(() => {
+                alert(`كود التحويل الخاص بك هو:\n${ussdCode}\n\nيرجى الاتصال بالكود لتحويل المبلغ، ثم تواصل معنا لتأكيد وصول التبرع للمستحقين.`);
+            }, 500);
+        }
+
+        // وظائف تبديل الأقسام
+        function openTab(tab) {
+            if (tab === 'store') {
+                document.getElementById('storeSection').classList.remove('hidden');
+                document.getElementById('charitySection').classList.add('hidden');
+                document.getElementById('tabStore').classList.add('active');
+                document.getElementById('tabCharity').classList.remove('active');
+            } else {
+                document.getElementById('storeSection').classList.add('hidden');
+                document.getElementById('charitySection').classList.remove('hidden');
+                document.getElementById('tabStore').classList.remove('active');
+                document.getElementById('tabCharity').classList.add('active');
+            }
+        }
+
+        // عرض المنتجات
+        function renderStore() {
+            const grid = document.getElementById('productGrid');
+            products.forEach(p => {
+                grid.innerHTML += `
+                    <div class="product-card p-4 text-center">
+                        <i class="${p.icon} ${p.color} text-4xl mb-3"></i>
+                        <h4 class="text-sm font-bold mb-2">${p.name}</h4>
+                        <div class="text-green-500 font-black mb-3">${p.price} IQD</div>
+                        <button onclick="addToCart(${p.id})" class="w-full bg-white/5 py-2 rounded-lg text-xs font-bold hover:bg-green-500 hover:text-black transition border border-white/5">أضف للسلة</button>
+                    </div>
+                `;
+            });
+        }
+
+        function addToCart(id) {
+            cart.push(products.find(p => p.id === id));
+            document.getElementById('cartCount').innerText = cart.length;
+        }
+
+        window.onload = renderStore;
+    </script>
+</body>
+</html>
